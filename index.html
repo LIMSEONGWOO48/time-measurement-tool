@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>学習時間計測ツール</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      text-align: center;
+      width: 100%;
+      max-width: 1500px; /* Increased max-width */
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      background-color: #f9f9f9;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .button-container {
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    select, button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 5px 0;
+    }
+
+    #selected-file-name {
+      margin-top: 20px;
+      font-size: 16px;
+    }
+
+    .filter-container {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .table-container {
+      max-height: 500px; /* Set the max height to ensure visibility */
+      overflow-y: auto; /* Enable vertical scrolling if the table overflows */
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    tr.completion-certificate-row {
+      background-color: yellow;
+    }
+
+    .url-cell {
+      font-size: smaller;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>【本気F】学習時間計測ツール</h1>
+    <div class="button-container">
+      <button id="select-file">ファイルを選択</button>
+      <select id="standard-times-select">
+        <option value="standard_times_chatgpt_1.5.csv">ChatGPT 1.5</option>
+        <option value="standard_times_chatgpt_1.4.csv">ChatGPT 1.4</option>
+        <option value="standard_times_chatgpt_1.3.csv">ChatGPT 1.3</option>
+        <option value="standard_times_chatgpt_1.2.csv">ChatGPT 1.2</option>
+        <option value="standard_times_daretsuku_1.3.csv">だれつく 1.3</option>
+        <option value="standard_times_daretsuku_1.1.csv">だれつく 1.1</option>
+        <option value="standard_times_web_marketing_1.3.csv">Webマーケティング 1.3</option>
+        <option value="standard_times_web_marketing_1.1.csv">Webマーケティング 1.1 / 1.2</option>
+        <option value="standard_times_web_marketing_1.0.csv">Webマーケティング 1.0</option>
+        <option value="standard_times_growth_hack_1.1.csv">イチからグロースハック 1.0 / 1.1 / 1.2</option>
+        <option value="standard_times_accounting.csv">会計DX</option>
+        <option value="standard_times_management.csv">マネジメント</option>
+        <option value="standard_times_copilot_1.0.csv">Copilot</option>
+        <option value="standard_times_new_daretsuku.csv">だれビジ（ver2.0だれつく）</option>
+        <option value="standard_times_new_chatgpt.csv">だれビジ（ver2.0ChatGPT）</option>
+        <option value="standard_times_new_web_marketing.csv">だれビジ（ver2.0Webマーケティング）</option>
+      </select>
+      <button id="process-files" disabled>学習時間計測</button>
+      <button id="export-csv">CSVとして保存</button>
+      <button id="save-pdf">PDFとして保存</button>
+    </div>
+    <p id="selected-file-name">選択されたファイル: なし</p>
+    <div class="filter-container">
+      <div>
+        <label for="name-filter">氏名:</label>
+        <select id="name-filter"></select>
+      </div>
+      <div>
+        <label for="mark-filter">マーク:</label>
+        <select id="mark-filter">
+          <option value="">全て</option>
+          <option value="O">O</option>
+          <option value="X">X</option>
+        </select>
+      </div>
+    </div>
+    <div class="table-container">
+      <table id="result-table" border="1">
+        <thead>
+          <tr>
+            <th>グループ</th>
+            <th>グループ(全階層)</th>
+            <th>氏名</th>
+            <th>フォルダ名</th>
+            <th>コンテンツ名</th>
+            <th>学習開始日時</th>
+            <th>学習完了日</th>
+            <th>所要時間</th>
+            <th>標準学習時間</th>
+            <th>確認時間</th>
+            <th>マーク</th>
+            <th>足りない時間</th>
+            <th>URL</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+  <script src="renderer.js"></script>
+</body>
+</html>
